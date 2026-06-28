@@ -49,7 +49,7 @@ curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/admin
 ## 3. 대응 방안 (Mitigation)
 - GoFiber 라이브러리 업그레이드 v2.52.5으로 업그레이드를 하여 대응 가능합니다.
 - 세션 내 값으로 인증 여부를 명시적으로 검증
-```bash
+```go
 // 취약한 코드
 if sess.Fresh() {
     return c.Status(401).JSON(fiber.Map{"error": "Unauthorized"})
@@ -60,7 +60,7 @@ if sess.Fresh() || sess.Get("authenticated") != true {
 }
 ```
 - 로그인 시 세션 ID 재생성
-```bash
+```go
 app.Post("/login", func(c *fiber.Ctx) error {
     // 인증 성공 후
     sess, _ := store.Get(c)
@@ -76,7 +76,7 @@ app.Post("/login", func(c *fiber.Ctx) error {
 })
 ```
 - 세션 ID가 서버에서 발급 한 것인지 확인
-```bash
+```go
 func validateSessionID(store *session.Store) fiber.Handler {
     return func(c *fiber.Ctx) error {
         cookieID := c.Cookies(store.Config.CookieName)
