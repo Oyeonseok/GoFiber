@@ -43,3 +43,56 @@ curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/admin
 ![](images/5.png)
 
 앞에서 로그인된 attacker1234를 그대로 사용합니다. 
+
+---
+
+## 3. 대응 방안 (Mitigation)
+- GoFiber 라이브러리 업그레이드 v2.52.5으로 업그레이드를 하여 대응 가능합니다.
+- 세션 내 값으로 인증 여부를 명시적으로 검증
+```bash
+// 취약한 코드
+if sess.Fresh() {
+    return c.Status(401).JSON(fiber.Map{"error": "Unauthorized"})
+}
+// 서버 내부 값 검증
+if sess.Fresh() || sess.Get("authenticated") != true {
+    return c.Status(401).JSON(fiber.Map{"error": "Unauthorized"})
+}
+```
+- 로그인 시 세션 ID 재생성
+```bash
+app.Post("/login", func(c *fiber.Ctx) error {
+    // 인증 성공 후
+    sess, _ := store.Get(c)
+    
+    // 기존 세션 파기 후 새 ID 생성 → 세션 고정 방지
+    if err := sess.Regenerate(); err != nil {
+        return c.Status(500).SendString(err.Error())
+    }
+    
+    sess.Set("authenticated", true)
+    sess.Set("user", "admin")
+    return sess.Save()
+})
+```
+- 세션 ID가 서버에서 발급 한 것인지 확인
+  ```bash
+  func validateSessionID(store *session.Store) fiber.Handler {
+    return func(c *fiber.Ctx) error {
+        cookieID := c.Cookies(store.Config.CookieName)
+        if cookieID != "" {
+            // UUID 형식이 아닌 ID는 거부
+            if _, err := uuid.Parse(cookieID); err != nil {
+                c.Cookie(&fiber.Cookie{
+                    Name:  store.Config.CookieName,
+                    Value: "",
+                    MaxAge: -1,
+                })
+            }
+        }
+        return c.Next()
+    }
+}
+```
+
+---
