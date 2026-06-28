@@ -18,6 +18,9 @@ docker compose up -d 또는 docker compose up --build
 ---
 
 ### 취약점 재현 (Vulnerability Reproduction)
+
+**정상적인 세션 ID**
+![/login 세션](images/1.png)
 공격자는 자신이 만든 세션 ID를 사용해 로그인을 처리합니다.
 ```bash
 curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/login
