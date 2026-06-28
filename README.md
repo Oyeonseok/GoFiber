@@ -32,14 +32,14 @@ curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/login
 
 동일한 세션으로 관리자 페이지에 요청을 보냅니다.
 
-**기존 의도 된 처리**
+**정상 처리 케이스**
 ![](images/3.png)
 ![](images/4.png)
 ```bash
 curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/admin
 ```
 
-**공격자가 의도한 처리**
+**공격자가 의도한 케이스**
 ![](images/5.png)
 
 앞에서 로그인된 attacker1234를 그대로 사용합니다. 
