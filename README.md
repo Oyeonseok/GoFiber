@@ -100,7 +100,9 @@ func validateSessionID(store *session.Store) fiber.Handler {
 ---
 
 ## 4. 참고자료
- NVD CVE 상세 | https://nvd.nist.gov/vuln/detail/CVE-2024-38513 |
+| 구분 | URL |
+|---|---|
+| NVD CVE 상세 | https://nvd.nist.gov/vuln/detail/CVE-2024-38513 |
 | GitHub Security Advisory | https://github.com/gofiber/fiber/security/advisories/GHSA-98j2-3j3p-fw2v |
 | 패치 커밋 | https://github.com/gofiber/fiber/commit/66a881441b27322a331f1b526cf1eb6b3358a4d8 |
 | CWE-384 Session Fixation | https://cwe.mitre.org/data/definitions/384.html |
