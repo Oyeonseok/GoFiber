@@ -76,8 +76,8 @@ app.Post("/login", func(c *fiber.Ctx) error {
 })
 ```
 - 세션 ID가 서버에서 발급 한 것인지 확인
-  ```bash
-  func validateSessionID(store *session.Store) fiber.Handler {
+```bash
+func validateSessionID(store *session.Store) fiber.Handler {
     return func(c *fiber.Ctx) error {
         cookieID := c.Cookies(store.Config.CookieName)
         if cookieID != "" {
