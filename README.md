@@ -12,7 +12,7 @@ GoFiber의 세션 미들웨어는 클라이언트가 쿠키로 전달한 session
 ### 환경 설정 (Environment Setup)
 다음 명령어를 통해 GoFiber의 2.52.4 버전의 테스트 환경을 구축합니다.
 ```bash
-docker compose up -d 또는docker compose up --build
+docker compose up -d 또는 docker compose up --build
 ```
 
 ---
