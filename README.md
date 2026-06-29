@@ -1,7 +1,10 @@
 # Session Middleware Token Injection Vulnerability (CVE-2024-38513)
 - 취약점 유형: CWE-384 (Session Fixation)
 - 취약 버전: github.com/gofiber/fiber/v2 < 2.52.5
-- CVSS v3.x Score: 9.8 Critical
+- (NVD 기준) CVSS v3.x Score: 9.8 Critical
+```
+textAV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+```
 - 공개일: 2024-07-01
   
 ### 요약 
