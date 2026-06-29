@@ -5,21 +5,32 @@
 - 공개일: 2024-07-01
   
 ### 요약 
-GoFiber의 세션 미들웨어는 클라이언트가 쿠키로 전달한 session_id 값을 검증 없이 그대로 사용해 세션을 생성한다.
-공격자가 임의의 session_id를 쿠키에 심으면 서버는 그 ID로 세션을 만든다.
-이후 정상 사용자가 해당 ID로 로그인하면 공격자가 세션을 탈취할 수 있다. 만약 세션 존재 여부만으로 인증을 판단하는 앱이라면 인증 우회도 가능하다.
+GoFiber 세션 미들웨어는 클라이언트가 지정한 임의의 session_id를 그대로 세션 ID로 사용하는 취약점이다. 이를 통해 세션 고정(Session Fixation) 이나 애플리케이션 구현에 따른 인증 우회가 발생할 수 있다.
 
 ---
 
-## 1. 환경 설정 (Environment Setup)
+## 1. 취약 조건
+- 취약한 GoFiber 세션 미들웨어 버전 사용 ( < 2.52.5 )
+- 사용자가 임의의 session_id를 서버에 전달 가능
+- 서버가 해당 값을 키로 세션을 생성
+- 애플리케이션이 세션의 존재 자체를 보안 or 인증 판단에 사용
+
+---
+
+## 2. 환경 설정 (Environment Setup)
 다음 명령어를 통해 GoFiber의 2.52.4 버전의 테스트 환경을 구축합니다.
 ```bash
 docker compose up -d 또는 docker compose up --build
 ```
 
+테스트 환경 종료 시 다음 명령어를 사용합니다
+```bash
+docker compose down
+```
+
 ---
 
-## 2. 취약점 재현 (Vulnerability Reproduction)
+## 3. 취약점 재현 (Vulnerability Reproduction)
 
 **정상적인 세션 ID**
 ![](images/1.png)
@@ -55,7 +66,7 @@ curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/profile
 
 ---
 
-## 3. 대응 방안 (Mitigation)
+## 4. 대응 방안 (Mitigation)
 - GoFiber 라이브러리를 v2.52.5으로 업그레이드를 하여 대응 가능합니다.
 - 세션 내 값으로 인증 여부를 명시적으로 검증
 ```go
@@ -106,7 +117,7 @@ func validateSessionID(store *session.Store) fiber.Handler {
 
 ---
 
-## 4. 참고자료
+## 5. 참고자료
 | 구분 | URL |
 |---|---|
 | NVD CVE 상세 | https://nvd.nist.gov/vuln/detail/CVE-2024-38513 |
