@@ -49,7 +49,7 @@ curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/admin
 ---
 
 ## 3. 대응 방안 (Mitigation)
-- GoFiber 라이브러리 업그레이드 v2.52.5으로 업그레이드를 하여 대응 가능합니다.
+- GoFiber 라이브러리를 v2.52.5으로 업그레이드를 하여 대응 가능합니다.
 - 세션 내 값으로 인증 여부를 명시적으로 검증
 ```go
 // 취약한 코드
