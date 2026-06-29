@@ -51,7 +51,7 @@ curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/admin
 ```bash
 curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/profile
 ```
-![](images/6.png)
+![](images/7.png)
 
 ---
 
