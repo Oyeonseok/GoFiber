@@ -8,7 +8,8 @@ AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 - 공개일: 2024-07-01
   
 ### 요약 
-GoFiber 세션 미들웨어는 클라이언트가 지정한 임의의 session_id를 그대로 세션 ID로 사용하는 취약점이다. 이를 통해 세션 고정(Session Fixation) 이나 애플리케이션 구현에 따른 인증 우회가 발생할 수 있다.
+GoFiber 세션 미들웨어는 클라이언트가 지정한 임의의 session_id를 그대로 세션 ID로 사용하는 취약점입니다.
+이를 통해 세션 고정(Session Fixation) 이나 애플리케이션 구현에 따른 인증 우회가 발생할 수 있습니다.
 
 ---
 
@@ -82,7 +83,7 @@ curl -i -H "Cookie: session_id=attacker123" http://localhost:3000/profile
 ---
 
 ## 4. 대응 방안 (Mitigation)
-- GoFiber 라이브러리를 v2.52.5으로 업그레이드를 하여 대응 가능합니다.
+- GoFiber 라이브러리를 v2.52.5으로 업그레이드를 하여 대응 가능
 - 세션 내 값으로 인증 여부를 명시적으로 검증
 ```go
 // 취약한 코드
